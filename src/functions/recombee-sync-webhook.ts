@@ -5,6 +5,8 @@ import { KontentConfiguration, RecombeeConfiguration } from "./model/configurati
 import KontentClient from "./model/kontent-client";
 import RecombeeClient from "./model/recombee-client";
 
+const signatureHeaderName = "x-kontent-ai-signature";
+
 const { RECOMBEE_API_KEY, KONTENT_SECRET } = process.env;
 
 export const handler: Handler = async (event) => {
@@ -34,13 +36,13 @@ export const handler: Handler = async (event) => {
   };
 
   const signitureHelper = new SignatureHelper();
-  // Consistency check - make sure your netlify environment variable and your webhook secret matches
+  // Verify that the request is comming from Kontent.ai and not from somewhere else
   if (
-    !event.headers["x-kc-signature"]
+    !event.headers[signatureHeaderName]
     || !signitureHelper.isValidSignatureFromString(
       event.body,
       KONTENT_SECRET,
-      event.headers["x-kc-signature"].toString(),
+      event.headers[signatureHeaderName].toString(),
     )
   ) {
     return { statusCode: 401, body: "Unauthorized" };

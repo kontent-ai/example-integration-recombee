@@ -67,13 +67,15 @@ To run this integration, you'll need a Kontent.ai project + a [Recombee account]
 
    You can include multiple Kontent.ai types and languages the webhook will be looking out for and synchronizing - to do so, just include them as a comma-separated list.
 
-   Subsequently, set the Kontent.ai **Delivery API triggers** to watch for _Publish_ and _Unpublish_ of your content items.
+   ![webhook-setup](docs/webhook.jpg)
 
-   At the end, this is an example of how your webhook might look like:
+   Subsequently, set the `Triggers` to `published data`. Then choose `Specific events` and select only `Content item` events. (You can also unselect `Content item metadata changed` events as they won't affect the resulting data in the index.)
 
-   ![webhook-setup](docs/webhook.png)
+   The resulting triggers setup should look like this:
 
-   Save the webhook and copy the generated **secret** as it would be required as a parameter in the following step.
+   ![webhook-triggers-setup](docs/webhook-triggers.jpg)
+
+   Save the webhook and copy the generated **secret** as it will be required as a parameter in the following step.
 
 4. ### Configure your Netlify functions
 
